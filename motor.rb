@@ -1,62 +1,64 @@
 class Motor
 
-  attr_accessor :name, :fuel_left, :fuel_capacity, :speed, :time, :distance, :total_dist, :total_time, :fuel_consumption
+  attr_accessor :name, :fuel_left, :fuel_capacity, :speed, :total_dist, :total_time
   WHEELS = 2
 
-  def initialize(name, fuel_capacity)
+  def initialize(name: "Honda", fuel_capacity: 100, speed: 20)
     @name = name
     @fuel_capacity = fuel_capacity
-    @total_dist = []
-    @total_time = []
+    @total_dist = 0
+    @total_time = 0
+    @speed = speed
+    # @distance  = 0
     @fuel_consumed = 0
-    @fuel_consumption = 0
     @fuel_left = fuel_capacity
 
     puts "Motor #{name} dengan kapasitas bensin #{fuel_capacity} liter telah dibuat"
   end
 
-  def run(distance, speed)
-    @distance = distance
-    @speed = speed
-    
-    check_fuel
-  end
-
-  def check_fuel
-    self.fuel_consumption = distance/100
-    if fuel_consumption>fuel_left 
-      puts "Bensin tidak cukup untuk perjalanan ini"
+  def run(time)
+    distance = self.speed * time
+    fuel_consumption = distance/100
+    if fuel_consumption>fuel_left
+      puts "bensin tidak cukup"
       return
-
-      if fuel_left<=0
-        puts "Bensin sudah habis"
-        return
-      end
-
+    # elsif fuel_left<=0
+    #   puts "Bensin sudah habis"
+    #   return
     else
-      time_consumed
-      fuel_consumed
-      travelled
+     
+      self.fuel_left -= fuel_consumption
+      puts "Kecepatan saat ini adalah #{self.speed} m/s"
+      puts "Waktu yang ditempuh adalah #{time} detik"
+      puts "Jarak yang ditempuh adalah #{distance} meter"
+      puts "Bensin yang tersisa ada #{self.fuel_left} liter"
+      self.total_time += time
+      self.total_dist += distance
     end
   end
 
-  def fuel_consumed
-    self.fuel_left -= (distance/100)
-  end
+  # def check_fuel
+  #   distance = self.speed * time
+  #   fuel_consumption = distance/100
+  #   if fuel_consumption>fuel_left
+  #     puts "bensin tidak cukup"
+  #     return
+  #   elsif fuel_left<=0
+  #     puts "Bensin sudah habis"
+  #     return
+  #   else
+     
+  #     self.fuel_left -= fuel_consumption
+  #     puts "Kecepatan saat ini adalah #{self.speed} m/s"
+  #     puts "Waktu yang ditempuh adalah #{self.time} detik"
+  #     puts "Jarak yang ditempuh adalah #{distance} meter"
+  #     puts "Bensin yang tersisa ada #{self.fuel_left} liter"
+  #     self.total_time += self.time
+  #     self.total_dist += distance
+  #   end
+  # end
 
-  def time_consumed
-    self.time = distance/speed
-    total_time.push(time)
-    total_dist.push(distance)
-  end
-
-  def travelled
-    puts "Kecepatan saat ini adalah #{self.speed} m/s"
-    puts "Waktu yang ditempuh adalah #{self.time} detik"
-    puts "Bensin yang tersisa ada #{fuel_left} liter"
-    puts "Jarak yang ditempuh selama ini adalah #{total_dist.sum} meter"
-    puts "Waktu yang ditempuh selama ini adalah #{total_time.sum} detik"
-  end
+  
 
   def fill_gas(fill)
     if fuel_left>=fuel_capacity
@@ -75,13 +77,9 @@ class Motor
 
   def reset
     self.fuel_left = 0
-    self.distance = 0
-    self.time = 0
+    self.total_dist = 0
+    self.total_time = 0
     puts "Reset jumlah bensin, jarak tempuh, dan waktu tempuh jadi 0"
-  end
-
-  def wheels
-    puts "Motor #{name} punya #{WHEELS} roda"
   end
 
 end
