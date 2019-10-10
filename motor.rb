@@ -1,8 +1,10 @@
 class Motor
+  include Horn
 
-  attr_accessor  :name, :fuel_left, :fuel_capacity, :speed, :total_dist, :total_time
+  attr_accessor  :name,  :fuel_left, :fuel_capacity, :speed, :total_dist, :total_time
   WHEELS = 2
   @@motors = []
+
 
   def initialize(name: "Honda", fuel_capacity: 100, speed: 20)
     @name = name
@@ -18,37 +20,50 @@ class Motor
   end
 
   def self.create(name: , fuel_capacity: , speed: )
-    Motor.new(name: name , fuel_capacity: fuel_capacity, speed: speed)
-    puts "Object #{name} berhasil ditambahkan dalam list"
+    motor = Motor.new(name: name , fuel_capacity: fuel_capacity, speed: speed)
+    motor
   end
 
   def self.all
-    puts @@motors.map {|x| x.name}.join(",")
-    @@motors # to return array of objects
+    motor = @@motors.map {|x| x.name}
+
+    if motor.any?
+      puts motor.join(", ")
+      @@motors # to return array of objects
+    else
+      puts "List motor kosong"
+    end
   end
 
   def self.find(name)
-    @@motors.find {|x| x.name==name}  
+    motor = @@motors.find {|x| x.name==name}
+    if motor != nil
+      puts "Motor #{name} dipilih"
+      motor
+    else
+      puts "Motor #{name} tidak ada dalam list"
+    end
   end
 
   def self.destroy(name)
-    @@motors -= @@motors.select {|x| x.name==name}
-    puts "Object berhasil dihapus dari list"
+    selected = @@motors.select {|x| x.name==name}
+    if selected.any?
+      @@motors -= selected
+      puts "Motor #{name} berhasil dihapus dari list"
+    else
+      puts "Motor #{name } tidak ada dalam list"
+    end
   end
 
   def run(time)
     distance = @speed * time
     fuel_consumption = distance/100
     if fuel_consumption>fuel_left
-      puts "bensin tidak cukup"
+      puts "Bensin tidak cukup"
       return
 
     else
       @fuel_left -= fuel_consumption
-      puts "Kecepatan saat ini adalah #{@speed} m/s"
-      puts "Waktu yang ditempuh adalah #{time} detik"
-      puts "Jarak yang ditempuh adalah #{distance} meter"
-      puts "Bensin yang tersisa ada #{@fuel_left} liter"
       @total_time += time
       @total_dist += distance
     end
@@ -60,10 +75,10 @@ class Motor
       return
     else 
       if (fuel_capacity - fuel_left) < fill
-        p "Bensin terisi sebanyak #{fuel_capacity - fuel_left} liter"
+        puts "Bensin terisi hanya sebanyak #{fuel_capacity - fuel_left} liter"
         @fuel_left += (fuel_capacity - fuel_left)
       else
-        p "Bensin terisi sebanyak #{fill} liter"
+        puts "Bensin terisi sebanyak #{fill} liter"
         @fuel_left += fill
       end
     end
