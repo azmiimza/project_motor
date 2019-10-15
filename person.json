@@ -1,0 +1,43 @@
+[{
+  "name": "John",
+  "money": "1000",
+  "capacity": "20",
+  "list_garage": [{
+      "type": "motor",
+      "name": "CBR250",
+      "fuel_capacity": "100",
+      "speed": "300",
+      "space": "7",
+      "price": "300"
+    },
+    {
+      "type": "car",
+      "name": "CRV",
+      "fuel_capacity": "500",
+      "speed": "300",
+      "space": "7",
+      "price": "300"
+    }
+  ]
+}, {
+  "name": "Mary",
+  "money": "1500",
+  "capacity": "35",
+  "list_garage": [{
+      "type": "motor",
+      "name": "Harley",
+      "fuel_capacity": "300",
+      "speed": "300",
+      "space": "10",
+      "price": "600"
+    },
+    {
+      "type": "car",
+      "name": "BMW",
+      "fuel_capacity": "700",
+      "speed": "300",
+      "space": "15",
+      "price": "900"
+    }
+  ]
+}]

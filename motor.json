@@ -1,0 +1,25 @@
+[{
+  "name": "MOTOR1",
+  "fuel_capacity": "100",
+  "speed": "300",
+  "space": "7",
+  "price": "300"
+}, {
+  "name": "MOTOR2",
+  "fuel_capacity": "100",
+  "speed": "300",
+  "space": "7",
+  "price": "300"
+}, {
+  "name": "MOTOR3",
+  "fuel_capacity": "100",
+  "speed": "300",
+  "space": "7",
+  "price": "300"
+}, {
+  "name": "MOTOR4",
+  "fuel_capacity": "100",
+  "speed": "300",
+  "space": "7",
+  "price": "300"
+}]

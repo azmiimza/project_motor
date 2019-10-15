@@ -1,13 +1,18 @@
-require_relative "horn"
-require "json"
-require "csv"
+require_relative "spedo_meter_engine"
+require_relative "motor"
 
-class Motor
-  include Horn
+class Car < Motor
+  include SpedoMeterEngine
 
-  attr_accessor  :name,  :fuel_left, :fuel_capacity, :speed, :total_dist, :total_time, :space, :price
-  WHEELS = 2
-  @@motors = []
+  WHEELS = 4
+  @@cars = []
+
+  def spedo
+    display_velocity_in_kmph
+    display_velocity_in_mph
+    display_distance_in_km
+    display_distance_in_mile
+  end
 
   def initialize(name:, fuel_capacity:, speed:, space:, price:)
     @name = name
@@ -16,46 +21,47 @@ class Motor
     @total_time = 0
     @speed = speed
     @fuel_consumed = 0
-    @fuel_left = 0
+    @fuel_left = fuel_capacity
     @space = space
     @price = price
-    @@motors << self
+    @@cars << self
 
-    puts "Motor #{name} dengan speed #{speed} dan #{space} space telah dibuat"
+    puts "Mobil #{name} dengan kapasitas bensin #{fuel_capacity} liter telah dibuat"
   end
 
   def self.create(name: , fuel_capacity: , speed: , space: , price: )
-    motor = Motor.new(name: name , fuel_capacity: fuel_capacity, speed: speed, space: space, price: price)
-    motor
+    car = Car.new(name: name , fuel_capacity: fuel_capacity, speed: speed, space: space, price: price)
+    car
   end
 
   def self.all
-    motor = @@motors.map {|x| x.name}
+    car = @@cars.map {|x| x.name}
 
-    if motor.any?
-      # puts motor.join(", ")
-      @@motors # to return array of objects
+    if car.any?
+      puts car.join(", ")
+      @@cars # to return array of objects
     else
-      puts "List motor kosong"
+      puts "List car kosong"
     end
   end
 
   def self.find(name)
-    motor = @@motors.find {|x| x.name==name}
-    if motor != nil
-      motor
+    car = @@cars.find {|x| x.name==name}
+    if car != nil
+      puts "Car #{name} dipilih"
+      car
     else
-      puts "Motor #{name} tidak ada dalam list"
+      puts "Car #{name} tidak ada dalam list"
     end
   end
 
   def self.destroy(name)
-    selected = @@motors.select {|x| x.name==name}
+    selected = @@cars.select {|x| x.name==name}
     if selected.any?
-      @@motors -= selected
-      puts "Motor #{name} berhasil dihapus dari list"
+      @@cars -= selected
+      puts "car #{name} berhasil dihapus dari list"
     else
-      puts "Motor #{name } tidak ada dalam list"
+      puts "car #{name } tidak ada dalam list"
     end
   end
 
@@ -64,7 +70,7 @@ class Motor
     fuel_consumption = distance/100
     if fuel_consumption>fuel_left
       puts "Bensin tidak cukup"
-      false
+      return
 
     else
       @fuel_left -= fuel_consumption
@@ -94,5 +100,5 @@ class Motor
     @total_time = 0
     puts "Reset jumlah bensin, jarak tempuh, dan waktu tempuh jadi 0"
   end
-end
 
+end

@@ -1,0 +1,25 @@
+[{
+  "name": "person1",
+  "money": "100",
+  "capacity": "20"
+}, {
+  "name": "person2",
+  "money": "300",
+  "capacity": "30"
+}, {
+  "name": "person3",
+  "money": "500",
+  "capacity": "40"
+}, {
+  "name": "person4",
+  "money": "900",
+  "capacity": "25"
+}, {
+  "name": "John",
+  "money": "1000",
+  "capacity": "20"
+}, {
+  "name": "Mary",
+  "money": "1500",
+  "capacity": "35"
+}]
